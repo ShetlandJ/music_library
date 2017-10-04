@@ -36,38 +36,46 @@ class Album
         artist_id,
         title,
         genre
-      ) = (
-        $1, $2, $3
-      )
-      WHERE id = $4;"
-      values = [@artist_id, @title, @genre, @id]
-      result = SqlRunner.run(sql, "update_artist_name", values)
-    end
+        ) = (
+          $1, $2, $3
+        )
+        WHERE id = $4;"
+        values = [@artist_id, @title, @genre, @id]
+        result = SqlRunner.run(sql, "update_artist_name", values)
+      end
 
-    def delete()
-      sql = "DELETE FROM albums where id = $1"
-      values = [@id]
-      result = SqlRunner.run(sql, "delete_album", values)
-    end
+      def delete()
+        sql = "DELETE FROM albums where id = $1"
+        values = [@id]
+        result = SqlRunner.run(sql, "delete_album", values)
+      end
 
-    def self.find(id)
-      sql = "SELECT * FROM albums WHERE id = $1"
-      values = [id]
-      albums = SqlRunner.run(sql, "find_album", values)
-      result = albums.map {|album| Album.new(album)}
-      return result
-    end
+      def self.find(id)
+        sql = "SELECT * FROM albums WHERE id = $1"
+        values = [id]
+        albums = SqlRunner.run(sql, "find_album", values)
+        result = albums.map {|album| Album.new(album)}
+        return result
+      end
 
-    def self.delete_all()
-      sql = "DELETE FROM albums;"
-      values = []
-      result = SqlRunner.run(sql, "delete_all_albums", values)
+      def self.delete_all()
+        sql = "DELETE FROM albums;"
+        values = []
+        result = SqlRunner.run(sql, "delete_all_albums", values)
+      end
+      #
+      def self.all()
+        sql = "SELECT * FROM albums"
+        values = []
+        albums = SqlRunner.run(sql, "find_all_albums", values)
+        return albums.map { |album| Album.new(album) }
+      end
+
+      def artists()
+        sql = "SELECT * FROM artists WHERE id = $1;"
+        values = [@artist_id]
+        results = SqlRunner.run(sql, "get_artist", values)
+        artist = results[0]
+        return Artist.new(artist)
+      end
     end
-    #
-    def self.all()
-      sql = "SELECT * FROM albums"
-      values = []
-      albums = SqlRunner.run(sql, "find_all_albums", values)
-      return albums.map { |album| Album.new(album) }
-  end
-# end

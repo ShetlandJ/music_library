@@ -10,15 +10,35 @@ artist1 = Artist.new({
   })
 
   artist1.save()
-  artist1.update()
-  #
+
+  artist2 = Artist.new({
+    'artist_name' => 'Future of the Left',
+    })
+
+    artist2.save()
+
   album1 = Album.new({
     'artist_id' => artist1.id,
     'title' => 'Weight',
     'genre' => 'Hard Rock'
     })
 
+    album2 = Album.new({
+      'artist_id' => artist1.id,
+      'title' => 'Hard Volume',
+      'genre' => 'Hard Rock'
+      })
+
+      album3 = Album.new({
+        'artist_id' => artist2.id,
+        'title' => 'How To Stop Your Brain In An Accident',
+        'genre' => 'Alternative Rock'
+        })
+
     album1.save()
+    album2.save()
+    album3.save()
+
 
     binding.pry
     nil
